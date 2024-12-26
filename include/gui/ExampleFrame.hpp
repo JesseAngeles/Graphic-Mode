@@ -6,9 +6,7 @@
 class ExampleFrame : public Frame
 { 
 public:
-    ExampleFrame(const Vector2f &position, const Vector2f &size, const Color &color);
-
-    void handleEvent(const Event& event) override;
+    ExampleFrame();
 };
 
 #endif // EXAMPLE_FRAME_HPP

@@ -9,12 +9,6 @@ Button::Button(const Vector2f &position, const Vector2f &size,
 }
 
 // Protected functions
-void Button::draw(RenderTarget &target, RenderStates states) const
-{
-    Frame::draw(target, states);
-    target.draw(text, states);
-}
-
 void Button::updateTextPosition()
 {
     FloatRect text_bounds = text.getLocalBounds();
@@ -22,7 +16,12 @@ void Button::updateTextPosition()
     text.setPosition(position.x + size.x / 2, position.y + size.y / 2);
 }
 
-// Public functions
+void Button::draw(RenderTarget &target, RenderStates states) const
+{
+    Frame::draw(target, states);
+    target.draw(text, states);
+}
+
 void Button::handleEvent(const Event &event)
 {
     if (event.type == sf::Event::MouseButtonPressed)
@@ -31,6 +30,7 @@ void Button::handleEvent(const Event &event)
                 if (onClick)
                     onClick();
 }
+
 
 void Button::updatePosition(const Vector2f &relative_position)
 {
@@ -41,6 +41,9 @@ void Button::updatePosition(const Vector2f &relative_position)
         child->updatePosition(relative_position);
 }
 
+// Public functions
+
+// Setters
 void Button::setText(const std::string &text_content)
 {
     text.setString(text_content);

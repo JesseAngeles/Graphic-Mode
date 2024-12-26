@@ -27,7 +27,7 @@ public:
     // Constructor
     MainWindow(int width, int height, const std::string &title, const Color &background_color = Color::Black);
 
-    void addFrame(std::shared_ptr<Frame> frame) { frames.push_back(frame); }
+    void addFrame(Frame frame) { frames.push_back(std::make_shared<Frame>(frame)); }
 
     // Drawer
     void run();

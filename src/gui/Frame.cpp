@@ -10,7 +10,7 @@ Frame::Frame(const Vector2f &position, const Vector2f &size, const Color &color)
 }
 
 // Protected functions
-void Frame::draw(RenderTarget& target, RenderStates states) const
+void Frame::draw(RenderTarget &target, RenderStates states) const
 {
     target.draw(background, states);
     for (const std::shared_ptr<Frame> &child : children)
@@ -24,18 +24,18 @@ void Frame::handleEvent(const Event &event)
         child->handleEvent(event);
 }
 
-void Frame::addChild(std::shared_ptr<Frame> &child)
-{
-    children.push_back(child);
-    child->updatePosition(this->position);
-}
-
 void Frame::updatePosition(const Vector2f &relative_position)
 {
     position += relative_position;
     background.setPosition(position);
     for (const std::shared_ptr<Frame> &child : children)
         child->updatePosition(relative_position);
+}
+
+void Frame::addChild(const std::shared_ptr<Frame> &child)
+{
+    children.push_back(child);
+    child->updatePosition(this->position);
 }
 
 // Settters

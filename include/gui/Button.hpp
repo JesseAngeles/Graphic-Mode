@@ -7,22 +7,19 @@
 
 class Button : public Frame
 {
-private:
+protected:
     Text text;
-
     std::function<void()> onClick;
 
-protected:
-    void draw(RenderTarget &target, RenderStates states) const override;
+    virtual void updateTextPosition();
 
-    void updateTextPosition();
+    void draw(RenderTarget &target, RenderStates states) const override;
+    void handleEvent(const sf::Event &event) override;
+    void updatePosition(const Vector2f &relative_position) override;
+
 public:
     Button(const Vector2f &position, const Vector2f &size,
            const Color &color, const Text &text);
-
-    void handleEvent(const sf::Event &event) override;
-
-    void updatePosition(const Vector2f &relative_position) override;
 
     // Setters
     void setOnClick(std::function<void()> callback) { onClick = callback; }

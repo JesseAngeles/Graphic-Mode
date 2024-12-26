@@ -26,7 +26,7 @@ public:
     virtual void handleEvent(const Event &event);
 
     void addChild(std::shared_ptr<Frame> &child);
-    void updatePosition(const Vector2f &relative_position);
+    virtual void updatePosition(const Vector2f &relative_position);
 
     // Settters
     void setPosition(const Vector2f &new_position);

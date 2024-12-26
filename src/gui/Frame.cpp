@@ -34,6 +34,8 @@ void Frame::updatePosition(const Vector2f &relative_position)
 {
     position += relative_position;
     background.setPosition(position);
+    for (const std::shared_ptr<Frame> &child : children)
+        child->updatePosition(relative_position);
 }
 
 // Settters

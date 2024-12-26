@@ -9,22 +9,24 @@ class Button : public Frame
 {
 private:
     Text text;
-    Font font;
 
     std::function<void()> onClick;
 
 protected:
     void draw(RenderTarget &target, RenderStates states) const override;
 
+    void updateTextPosition();
 public:
     Button(const Vector2f &position, const Vector2f &size,
            const Color &color, const Text &text);
 
     void handleEvent(const sf::Event &event) override;
 
+    void updatePosition(const Vector2f &relative_position) override;
+
     // Setters
     void setOnClick(std::function<void()> callback) { onClick = callback; }
-    void setText(const Text &text);
+    void setText(const std::string &text_content);
 };
 
 #endif // BUTTON_HPP

@@ -15,6 +15,7 @@ class MainWindow
 {
 private:
     RenderWindow window;
+    Color background_color;
 
     // Frames
     std::vector<std::shared_ptr<Frame>> frames;
@@ -24,7 +25,7 @@ private:
 
 public:
     // Constructor
-    MainWindow(int width, int height, const std::string &title);
+    MainWindow(int width, int height, const std::string &title, const Color &background_color = Color::Black);
 
     void addFrame(std::shared_ptr<Frame> frame) { frames.push_back(frame); }
 

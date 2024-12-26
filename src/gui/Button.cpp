@@ -5,7 +5,7 @@ Button::Button(const Vector2f &position, const Vector2f &size,
                const Color &color, const Text &text)
     : Frame(position, size, color), text(text)
 {
-    setText(text);
+    updateTextPosition();
 }
 
 // Protected functions
@@ -13,6 +13,13 @@ void Button::draw(RenderTarget &target, RenderStates states) const
 {
     Frame::draw(target, states);
     target.draw(text, states);
+}
+
+void Button::updateTextPosition()
+{
+    FloatRect text_bounds = text.getLocalBounds();
+    text.setOrigin(text_bounds.width / 2, text_bounds.height / 2);
+    text.setPosition(position.x + size.x / 2, position.y + size.y / 2);
 }
 
 // Public functions
@@ -25,11 +32,17 @@ void Button::handleEvent(const Event &event)
                     onClick();
 }
 
-// Setters
-void Button::setText(const Text &text)
+void Button::updatePosition(const Vector2f &relative_position)
 {
-    this->text = text;
-    sf::FloatRect text_bounds = text.getLocalBounds();
-    this->text.setOrigin(text_bounds.width / 2, text_bounds.height / 2);
-    this->text.setPosition(position.x + size.x / 2, position.y + size.y / 2);
+    position += relative_position;
+    background.setPosition(position);
+    updateTextPosition();
+    for (const std::shared_ptr<Frame> &child : children)
+        child->updatePosition(relative_position);
+}
+
+void Button::setText(const std::string &text_content)
+{
+    text.setString(text_content);
+    updateTextPosition();
 }

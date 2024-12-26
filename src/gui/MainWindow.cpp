@@ -1,8 +1,8 @@
 #include "gui/MainWindow.hpp"
 
 // Constructor
-MainWindow::MainWindow(int width, int height, const std::string &title)
-    : window(VideoMode(width, height), title) {}
+MainWindow::MainWindow(int width, int height, const std::string &title, const Color &background_color)
+    : window(VideoMode(width, height), title), background_color(background_color) {}
 
 // Private functions
 void MainWindow::handleEvent()
@@ -22,7 +22,7 @@ void MainWindow::handleEvent()
 
 void MainWindow::render()
 {
-    window.clear(Color::Black);
+    window.clear(background_color);
 
     // Render frames
     for (const std::shared_ptr<Frame> &frame : frames)

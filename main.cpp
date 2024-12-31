@@ -5,12 +5,13 @@
 #include "gui/ExampleFrame.hpp"
 #include "gui/ExampleButton.hpp"
 #include "gui/ExampleTextBox.hpp"
+#include "gui/ExampleGraphic.hpp"
 
 using namespace std;
 
 int main()
 {
-    MainWindow gui(500, 500, "Hola mundo", Color::Cyan);
+    MainWindow gui(1000, 500, "Hola mundo", Color::Cyan);
 
     Font font;
     font.loadFromFile("./resources/fonts/Roboto-Medium.ttf");
@@ -23,10 +24,12 @@ int main()
     ExampleFrame frame;
     ExampleButton btn(text_default_format);
     ExampleTextBox text_box(text_default_format);
+    ExampleGraphic graphic;
 
     frame.addChild(std::make_shared<ExampleButton>(btn));
     frame.addChild(std::make_shared<ExampleTextBox>(text_box));
-
+    frame.addChild(std::make_shared<ExampleGraphic>(graphic));
+    
     gui.addFrame(frame);
     gui.run();
 

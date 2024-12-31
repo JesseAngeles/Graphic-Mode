@@ -3,23 +3,23 @@
 
 #include <functional>
 
-#include "gui/Frame.hpp"
+#include "gui/components/Frame.hpp"
 
 class Button : public Frame
 {
 protected:
-    Text text;
+    sf::Text text;
     std::function<void()> onClick;
 
     virtual void updateTextPosition();
 
-    void draw(RenderTarget &target, RenderStates states) const override;
+    void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
     void handleEvent(const sf::Event &event) override;
-    void updatePosition(const Vector2f &relative_position) override;
+    void updatePosition(const sf::Vector2f &relative_position) override;
 
 public:
-    Button(const Vector2f &position, const Vector2f &size,
-           const Color &color, const Text &text);
+    Button(const sf::Vector2f &position, const sf::Vector2f &size,
+           const sf::Color &color, const sf::Text &text);
 
     // Setters
     void setOnClick(std::function<void()> callback) { onClick = callback; }

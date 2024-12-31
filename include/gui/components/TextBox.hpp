@@ -3,13 +3,13 @@
 
 #include <functional>
 
-#include "gui/Frame.hpp"
+#include "gui/components/Frame.hpp"
 
 class TextBox : public Frame
 {
 protected:
     // Attributes
-    Text text;
+    sf::Text text;
     std::string input_string;
     size_t char_limit;
     bool is_active;
@@ -17,13 +17,13 @@ protected:
 
     virtual void updateTextPosition();
 
-    void draw(RenderTarget &target, RenderStates states) const override;
-    void handleEvent(const Event &event) override;
+    void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+    void handleEvent(const sf::Event &event) override;
 
 public:
     // Constructor
-    TextBox(const Vector2f &position, const Vector2f &size, const Color &color,
-            const Text &text, const std::string &input_string, size_t char_limit = 20);
+    TextBox(const sf::Vector2f &position, const sf::Vector2f &size, const sf::Color &color,
+            const sf::Text &text, const std::string &input_string, size_t char_limit = 20);
 
     // Setters
     void setOnEnter(std::function<void(const std::string &)> callback) { onEnter = callback; }

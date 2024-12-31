@@ -4,7 +4,9 @@
 #include <iostream>
 #include <functional> // Incluir para std::function
 
-#include "gui/Button.hpp"
+#include "gui/components/Button.hpp"
+
+using namespace sf;
 
 class ExampleButton : public Button
 {

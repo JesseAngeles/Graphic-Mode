@@ -7,7 +7,7 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "gui/Frame.hpp"
+#include "gui/components/Frame.hpp"
 
 using namespace sf;
 

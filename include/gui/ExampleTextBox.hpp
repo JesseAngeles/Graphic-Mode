@@ -1,7 +1,9 @@
 #ifndef EXAMPLE_TEXT_BOX_HPP
 #define EXAMPLE_TEXT_BOX_HPP
 
-#include "gui/TextBox.hpp"
+#include "gui/components/TextBox.hpp"
+
+using namespace sf;
 
 class ExampleTextBox : public TextBox
 {

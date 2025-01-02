@@ -6,6 +6,7 @@
 #include "gui/ExampleButton.hpp"
 #include "gui/ExampleTextBox.hpp"
 #include "gui/ExampleGraphic.hpp"
+#include "gui/ExampleGrid.hpp"
 
 using namespace std;
 
@@ -25,10 +26,12 @@ int main()
     ExampleButton btn(text_default_format);
     ExampleTextBox text_box(text_default_format);
     ExampleGraphic graphic;
+    ExampleGrid grid;
 
     frame.addChild(std::make_shared<ExampleButton>(btn));
     frame.addChild(std::make_shared<ExampleTextBox>(text_box));
     frame.addChild(std::make_shared<ExampleGraphic>(graphic));
+    frame.addChild(std::make_shared<ExampleGrid>(grid));
     
     gui.addFrame(frame);
     gui.run();

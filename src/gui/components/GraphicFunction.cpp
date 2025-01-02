@@ -10,6 +10,19 @@ GraphicFunction::GraphicFunction(const sf::Vector2f &position, const sf::Vector2
     max_pos.y = position.y + size.y;
 }
 
+// Private functions
+void GraphicFunction::calculatePosition(sf::Vector2f &position, const sf::Vector2f &scale, const sf::Vector2f &origin)
+{
+    position.x -= this->origin.x;
+    position.y -= this->origin.y;
+
+    position.x /= this->scale.x;
+    position.y /= -this->scale.y;
+
+    position.x = origin.x + position.x * scale.x;
+    position.y = origin.y - position.y * scale.y;
+}
+
 // Public functions
 void GraphicFunction::addPoint(sf::Vector2f position, bool connect_last)
 {
@@ -19,10 +32,6 @@ void GraphicFunction::addPoint(sf::Vector2f position, bool connect_last)
 
     position.x = origin.x + position.x * scale.x;
     position.y = origin.y - position.y * scale.y;
-
-    if (position.x < min_pos.x || position.x > max_pos.x ||
-        position.y < min_pos.y || position.y > max_pos.y)
-        return;
 
     sf::Vector2f circle_pos = position;
     circle_pos.x -= default_dot.getRadius();
@@ -46,6 +55,35 @@ void GraphicFunction::addPoint(sf::Vector2f position, bool connect_last)
     line[1].position = position;
 
     lines.push_back(line);
+}
+
+void GraphicFunction::rescale(const sf::Vector2f &scale, const sf::Vector2f &origin)
+{
+    // Change dots position
+    for (sf::CircleShape &dot : dots)
+    {
+        sf::Vector2f position = dot.getPosition();
+
+        // Rest radius position
+        position.x += default_dot.getRadius();
+        position.y += default_dot.getRadius();
+
+        calculatePosition(position, scale, origin);
+
+        position.x -= default_dot.getRadius();
+        position.y -= default_dot.getRadius();
+
+        dot.setPosition(position);
+    }
+
+    // Change line position
+    for (sf::VertexArray &line : lines)
+        for (int i = 0; i <= 1; i++)
+            calculatePosition(line[i].position, scale, origin);
+
+    // Finally
+    this->scale = scale;
+    this->origin = origin;
 }
 
 // Setters

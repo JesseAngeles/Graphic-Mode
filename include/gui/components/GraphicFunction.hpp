@@ -24,6 +24,8 @@ private:
     bool has_dot;
     bool has_line;
 
+    void calculatePosition(sf::Vector2f &position, const sf::Vector2f &scale, const sf::Vector2f &origin);
+
 public:
     // Constructor
     GraphicFunction(const sf::Vector2f &position, const sf::Vector2f &size,
@@ -31,6 +33,7 @@ public:
 
     // Functions
     void addPoint(sf::Vector2f position, bool connect_last = true);
+    void rescale(const sf::Vector2f &scale, const sf::Vector2f &origin);
 
     // Getters
     std::vector<sf::CircleShape> getDots() const { return dots; }

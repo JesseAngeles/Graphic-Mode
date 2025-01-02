@@ -5,11 +5,8 @@ Graphic::Graphic(const sf::Vector2f &position, const sf::Vector2f &size,
                  const sf::Color color, const sf::Vector2f &min_point, const sf::Vector2f &max_point)
     : Frame(position, size, color), min_point(min_point), max_point(max_point)
 {
-    scale.x = this->size.x / std::abs(max_point.x - min_point.x);
-    scale.y = this->size.y / std::abs(max_point.y - min_point.y);
-
-    origin.x = position.x - min_point.x * scale.x;
-    origin.y = position.y - min_point.y * scale.y;
+    calculateScale();
+    calculateCenter();
 }
 
 // Protected functions
@@ -23,11 +20,28 @@ void Graphic::draw(sf::RenderTarget &target, sf::RenderStates states) const
     for (const std::shared_ptr<GraphicFunction> &function : functions)
     {
         for (const sf::VertexArray &line : function->getLines())
-            target.draw(line, states);
-
+            if (background.getGlobalBounds().contains(line[0].position) &&
+                background.getGlobalBounds().contains(line[1].position))
+                target.draw(line, states);
+                
         for (const sf::CircleShape &dot : function->getDots())
-            target.draw(dot, states);
+        {
+            if (background.getGlobalBounds().contains(dot.getPosition()))
+                target.draw(dot, states);
+        }
     }
+}
+
+void Graphic::calculateScale()
+{
+    scale.x = size.x / std::abs(max_point.x - min_point.x);
+    scale.y = size.y / std::abs(max_point.y - min_point.y);
+}
+
+void Graphic::calculateCenter()
+{
+    origin.x = position.x - min_point.x * scale.x;
+    origin.y = position.y + max_point.y * scale.y;
 }
 
 // Public functions
@@ -55,7 +69,20 @@ void Graphic::drawAxes()
     }
 }
 
-#include <iostream>
+void Graphic::rescale(const sf::Vector2f &min_point, const sf::Vector2f &max_point)
+{
+    this->min_point = min_point;
+    this->max_point = max_point;
+
+    calculateScale();
+    calculateCenter();
+
+    axes.clear();
+    drawAxes();
+
+    for (const std::shared_ptr<GraphicFunction> &function : functions)
+        function->rescale(scale, origin);
+}
 
 std::shared_ptr<GraphicFunction> Graphic::drawFunction(
     std::function<float(float)> f, const float &min, const float &max,

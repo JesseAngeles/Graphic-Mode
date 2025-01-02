@@ -19,9 +19,12 @@ ExampleGraphic::ExampleGraphic()
 
     std::shared_ptr<GraphicFunction> fun = drawFunction(fun0, -10, 10, 1, circle, line);
     fun->addPoint(Vector2f(1, 0), false);
-    std::shared_ptr<GraphicFunction> fun2 = drawFunction(fun1, -10, 10, 1, circle);
-    fun2->addPoint(Vector2f(0, -3));
-    fun2->addPoint(Vector2f(0, 11));
+    std::shared_ptr<GraphicFunction> fun2 = drawFunction(fun1, -10, 10, 1, circle, line);
+    fun2->addPoint(Vector2f(0, -3), false);
+    fun2->addPoint(Vector2f(0, 11), false);
+
+    rescale(sf::Vector2f(-7, -4), sf::Vector2f(4, 4));
+
 }
 
 float ExampleGraphic::lineFunction(float x)

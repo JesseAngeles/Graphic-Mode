@@ -21,12 +21,17 @@ protected:
 
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
+    void calculateScale();
+    void calculateCenter();
+
 public:
     // Constructor
     Graphic(const sf::Vector2f &position, const sf::Vector2f &size,
             const sf::Color color, const sf::Vector2f &min_point, const sf::Vector2f &max_point);
 
     void drawAxes();
+
+    void rescale(const sf::Vector2f &min_point, const sf::Vector2f &max_point);
 
     virtual std::shared_ptr<GraphicFunction> drawFunction(
         std::function<float(float)> function, const float &min, const float &max, const float &increment,
